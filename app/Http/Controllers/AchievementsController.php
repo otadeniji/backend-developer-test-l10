@@ -8,13 +8,20 @@ use Illuminate\Http\Request;
 class AchievementsController extends Controller
 {
     public function index(User $user)
-    {
-        return response()->json([
-            'unlocked_achievements' => [],
-            'next_available_achievements' => [],
-            'current_badge' => '',
-            'next_badge' => '',
-            'remaing_to_unlock_next_badge' => 0
-        ]);
-    }
+{
+    $unlockedAchievements = $this->getUnlockedAchievements($user);
+    $nextAvailableAchievements = $this->getNextAvailableAchievements($user);
+    $currentBadge = $this->getCurrentBadge($user);
+    $nextBadge = $this->getNextBadge($user);
+    $remainingToUnlockNextBadge = $this->getRemainingToUnlockNextBadge($user);
+
+    return response()->json([
+        'unlocked_achievements' => $unlockedAchievements,
+        'next_available_achievements' => $nextAvailableAchievements,
+        'current_badge' => $currentBadge,
+        'next_badge' => $nextBadge,
+        'remaining_to_unlock_next_badge' => $remainingToUnlockNextBadge
+    ]);
+}
+
 }
