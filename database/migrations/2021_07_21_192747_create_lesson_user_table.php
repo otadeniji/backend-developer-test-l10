@@ -14,9 +14,11 @@ class CreateLessonUserTable extends Migration
     public function up()
     {
         Schema::create('lesson_user', function (Blueprint $table) {
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('lesson_id')->constrained();
+            $table->id(); // Primary key for the pivot table
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('lesson_id')->constrained()->onDelete('cascade');
             $table->boolean('watched')->default(false);
+            $table->timestamps(); // Optional, but useful for tracking when the record was created/updated
         });
     }
 
